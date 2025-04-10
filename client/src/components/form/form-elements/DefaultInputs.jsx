@@ -1,9 +1,9 @@
 import { useState } from "react";
-import ComponentCard from "../../common/ComponentCard";
-import Label from "../Label";
-import Input from "../input/InputField";
-import Select from "../Select";
-import { EyeCloseIcon, EyeIcon, TimeIcon } from "../../../icons";
+import ComponentCard from "../../common/ComponentCard.jsx";
+import Label from "../Label.tsx";
+import Input from "../input/InputField.tsx";
+import Select from "../Select.tsx";
+import { EyeCloseIcon, EyeIcon, TimeIcon } from "../../../icons/index.ts";
 import DatePicker from "../date-picker.tsx";
 
 export default function DefaultInputs() {
@@ -13,7 +13,7 @@ export default function DefaultInputs() {
     { value: "template", label: "Template" },
     { value: "development", label: "Development" },
   ];
-  const handleSelectChange = (value: string) => {
+  const handleSelectChange = (value) => {
     console.log("Selected value:", value);
   };
 

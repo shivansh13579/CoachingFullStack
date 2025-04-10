@@ -4,7 +4,7 @@ import "./index.css";
 import "swiper/swiper-bundle.css";
 import "flatpickr/dist/flatpickr.css";
 import App from "./App.jsx";
-import { AppWrapper } from "./components/common/PageMeta.js";
+// import { AppWrapper } from "./components/common/PageMeta.js";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,14 +14,12 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <ThemeProvider>
-        <AppWrapper>
-          <App />
-          <ToastContainer
-            position="bottom-right"
-            theme="colored"
-            bodyClassName="toastBody"
-          />
-        </AppWrapper>
+        <App />
+        <ToastContainer
+          position="bottom-right"
+          theme="colored"
+          bodyClassName="toastBody"
+        />
       </ThemeProvider>
     </AuthProvider>
   </StrictMode>

@@ -1,8 +1,7 @@
 import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
 
 export default function LineChartOne() {
-  const options: ApexOptions = {
+  const options = {
     legend: {
       show: false, // Hide legend
       position: "top",
