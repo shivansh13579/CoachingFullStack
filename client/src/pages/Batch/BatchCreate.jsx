@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import BeatLoader from "react-spinners/BeatLoader";
 
-function CreateBatch() {
+export default function BatchCreate() {
   const { token } = useAuth();
   const [batchData, setBatchData] = useState({
     batchName: "",
@@ -202,5 +202,3 @@ function CreateBatch() {
     </div>
   );
 }
-
-export default CreateBatch;

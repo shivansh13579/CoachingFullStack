@@ -8,7 +8,6 @@ import GetAllBatch from "./pages/Batch/GetAllBatch";
 import AllStudents from "./pages/Students/AllStudents";
 import AllFee from "./pages/StudentFee/AllFee";
 import Home from "./pages/Dashboard/Home";
-import CreateBatch from "./pages/Batch/createBatch";
 import UpdateBatch from "./pages/Batch/UpdateBatch";
 import CreateStudents from "./pages/Students/CreateStudents";
 import UpdateStudent from "./pages/Students/UpdateStudent";
@@ -16,6 +15,7 @@ import StudentFee from "./pages/StudentFee/StudentFee";
 import UpdateFee from "./pages/StudentFee/UpdateFee";
 import ProtectedRoute from "./context/ProtectedRoute";
 import DetailStudentFee from "./pages/StudentFee/DetailStudentFee";
+import BatchCreate from "./pages/Batch/BatchCreate";
 
 export default function App() {
   return (
@@ -33,7 +33,7 @@ export default function App() {
           >
             <Route index path="/" element={<Home />} />
             <Route path="/batch" element={<GetAllBatch />} />
-            <Route path="/create-batch" element={<CreateBatch />} />
+            <Route path="/create-batch" element={<BatchCreate />} />
             <Route path="/update-batch/:id" element={<UpdateBatch />} />
             <Route path="/student" element={<AllStudents />} />
             <Route path="/create-student" element={<CreateStudents />} />
