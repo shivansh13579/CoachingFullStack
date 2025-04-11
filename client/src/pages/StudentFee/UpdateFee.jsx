@@ -34,6 +34,7 @@ function UpdateFee() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -67,6 +68,7 @@ function UpdateFee() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       const result = await apiResponse.json();
@@ -93,6 +95,7 @@ function UpdateFee() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -158,9 +161,11 @@ function UpdateFee() {
       );
       const result = await apiResponse.json();
       setLoading(false);
-      if (result.success === true) {
+      if (result?.success) {
         toast.success(result.message);
         navigate("/student-fee");
+      } else {
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setLoading(false);

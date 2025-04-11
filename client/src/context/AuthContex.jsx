@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -36,6 +37,7 @@ const AuthProvider = ({ children }) => {
       });
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+      toast.success("Logout successfully");
     } catch (error) {
       console.log("Error deleting user:", error);
       return {

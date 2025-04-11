@@ -31,6 +31,7 @@ function StudentFee() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       const result = await apiResponse.json();
@@ -57,6 +58,7 @@ function StudentFee() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -124,9 +126,11 @@ function StudentFee() {
       );
       const result = await apiResponse.json();
       setLoading(false);
-      if (result.success === true) {
+      if (result?.success) {
         toast.success(result.message);
         navigate("/student-fee");
+      } else {
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setLoading(false);

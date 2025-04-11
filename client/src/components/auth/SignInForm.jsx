@@ -58,7 +58,7 @@ export default function SignInForm() {
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="mb-5 sm:mb-8 flex justify-center items-center">
           <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-            Login
+            Admin Login
           </h1>
         </div>
         <form onSubmit={handleSubmit}>
@@ -74,7 +74,13 @@ export default function SignInForm() {
                 onChange={handleChange}
                 placeholder="info@gmail.com"
               />
+              {
+                <p className="text-gray-800 dark:text-white/90">
+                  For trail:- abc1@gmail.com, pass:-123456
+                </p>
+              }
             </div>
+
             <div>
               <Label>
                 Password <span className="text-error-500">*</span>

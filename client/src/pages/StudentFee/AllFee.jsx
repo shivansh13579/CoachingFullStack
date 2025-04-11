@@ -11,8 +11,10 @@ import { useNavigate } from "react-router";
 import Config from "../../config/Config";
 import { toast } from "react-toastify";
 import moment from "moment"; // to format date
+import { useAuth } from "../../context/AuthContex";
 
 function AllFee() {
+  const { token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [allStudentsFee, setAllStudentsFee] = useState([]);
   const navigate = useNavigate();
@@ -30,6 +32,7 @@ function AllFee() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -56,6 +59,7 @@ function AllFee() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -76,8 +80,10 @@ function AllFee() {
   return (
     <>
       {loading ? (
-        "Loading..."
-      ) : (
+        <div className="text-3xl flex items-center justify-center py-5 pb-6 dark:text-gray-300">
+          loading...
+        </div>
+      ) : allStudentsFee.length > 0 ? (
         <>
           <div className="flex items-center justify-end py-5 pb-6">
             <p
@@ -93,25 +99,32 @@ function AllFee() {
               key={studentFee._id}
               className="mb-8 rounded-lg border border-gray-200 p-4 shadow-md dark:border-white/10 dark:bg-white/5"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-white flex items-center gap-2">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                <h2 className="text-base md:text-xl font-semibold text-gray-800 dark:text-white flex items-center gap-2">
                   👤 Student: {studentFee.student?.studentName}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300">
+
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
                   📊 Total Paid: ₹{studentFee.totalAmount}
                 </p>
+                {/* <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
+                  📊 Remaning: ₹
+                  {studentFee.totalBatchFee - studentFee.totalAmount}
+                </p> */}
+
                 <p
                   onClick={() => handleDetail(studentFee._id)}
-                  className="flex items-center gap-2 text-gray-600 dark:text-gray-300"
+                  className="flex items-center gap-2 text-sm md:text-base text-gray-600 dark:text-gray-300"
                 >
                   <span>
-                    <FaEye className="text-green-600 text-2xl hover:text-green-800 cursor-pointer" />
+                    <FaEye className="text-green-600 text-xl md:text-2xl hover:text-green-800 cursor-pointer" />
                   </span>
                   <span className="hover:text-blue-500">
-                    Veiw StudentDetails
+                    View StudentDetails
                   </span>
                 </p>
               </div>
+
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader className="bg-gray-100 dark:bg-gray-700">
@@ -172,6 +185,43 @@ function AllFee() {
               </div>
             </div>
           ))}
+        </>
+      ) : (
+        <>
+          <div className="flex items-center justify-end py-5 pb-6">
+            <p
+              onClick={() => navigate("/create-fee")}
+              className="px-3 py-2 rounded-sm bg-blue-700 text-white flex items-center gap-1 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium dark:bg-blue-600 dark:hover:bg-blue-700"
+            >
+              <FaPlus /> Create StudentFee
+            </p>
+          </div>
+          <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md dark:border-white/10 dark:bg-white/5">
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader className="bg-gray-100 dark:bg-gray-700">
+                  <TableRow>
+                    {[
+                      "Fee ID",
+                      "Amount",
+                      "Status",
+                      "Batch Name",
+                      "Date",
+                      "Actions",
+                    ].map((head, i) => (
+                      <TableCell
+                        key={i}
+                        isHeader
+                        className="px-6 py-3 text-left text-sm font-semibold text-gray-600 dark:text-gray-200"
+                      >
+                        {head}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+              </Table>
+            </div>
+          </div>
         </>
       )}
     </>

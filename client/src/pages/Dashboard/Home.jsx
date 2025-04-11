@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { FiBox } from "react-icons/fi";
 import { FaUsers } from "react-icons/fa";
 import Config from "../../config/Config";
+import { useAuth } from "../../context/AuthContex";
 
 export default function Home() {
+  const { token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [allBatches, setAllBatches] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
@@ -21,6 +23,7 @@ export default function Home() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       });
       const result = await apiResponse.json();
@@ -47,6 +50,7 @@ export default function Home() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -75,6 +79,7 @@ export default function Home() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -99,16 +104,6 @@ export default function Home() {
     0
   );
 
-  // const totalpaidStudents = allStudentsFee.filter(
-  //   (student) => student.status === "paid"
-  // ).length;
-  // const totalUnpaidStudents = allStudentsFee.filter(
-  //   (student) => student.status === "unpaid"
-  // ).length;
-  // const totalPartialStudents = allStudentsFee.filter(
-  //   (student) => student.status === "partial"
-  // ).length;
-
   return (
     <>
       <div className="grid grid-cols-12 gap-4 md:gap-6">
@@ -125,7 +120,7 @@ export default function Home() {
                     Total Batches
                   </span>
                   <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                    {totalBatches}
+                    {totalBatches ? totalBatches : 0}
                   </h4>
                 </div>
               </div>
@@ -140,7 +135,7 @@ export default function Home() {
                     Total Studenta
                   </span>
                   <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                    {totalStudents}
+                    {totalStudents ? totalStudents : 0}
                   </h4>
                 </div>
               </div>
@@ -155,7 +150,7 @@ export default function Home() {
                     Total Payment
                   </span>
                   <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-                    Rs {totalPayment}
+                    Rs {totalPayment ? totalPayment : 0}
                   </h4>
                 </div>
               </div>

@@ -35,13 +35,13 @@ function UpdateBatch() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       const result = await apiResponse.json();
-      console.log("result", result);
       setLoading(false);
-      if (result.success === true) {
+      if (result?.success) {
         const batch = result.batch;
         setGetData({
           ...batch,
@@ -52,6 +52,8 @@ function UpdateBatch() {
             ? new Date(batch.batchEndDate)
             : null,
         });
+      } else {
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       toast.error(error.message);
@@ -85,9 +87,11 @@ function UpdateBatch() {
       );
       const result = await apiResponse.json();
       setLoading(false);
-      if (result.success === true) {
+      if (result?.success) {
         toast.success(result.message);
         navigate("/batch");
+      } else {
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setLoading(false);

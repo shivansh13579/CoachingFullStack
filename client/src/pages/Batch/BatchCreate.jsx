@@ -55,14 +55,17 @@ export default function BatchCreate() {
         }
       );
       const result = await apiResponse.json();
+
       setLoading(false);
-      if (result.success === true) {
+      if (result?.success) {
         toast.success(result.message);
         navigate("/batch");
+      } else {
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setLoading(false);
-      toast.error(error.message);
+      toast.error(error.message || "Unexpected error occurred");
       console.log("err", error.message);
     }
   };

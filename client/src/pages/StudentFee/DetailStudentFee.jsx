@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Config from "../../config/Config";
 import { useParams } from "react-router";
+import { useAuth } from "../../context/AuthContex";
 
 function DetailStudentFee() {
+  const { token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [students, setStudents] = useState("");
   const { id } = useParams();
@@ -20,6 +22,7 @@ function DetailStudentFee() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
