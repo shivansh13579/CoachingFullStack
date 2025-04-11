@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post("/createBatch", authVerify, createBatch);
 router.put("/updateBatch/:id", authVerify, updateBatch);
-router.get("/getBatches", getAllBatches);
-router.get("/getBatch/:id", getBatch);
-router.delete("/delete/:id", deleteBatch);
+router.get("/getBatches", authVerify, getAllBatches);
+router.get("/getBatch/:id", authVerify, getBatch);
+router.delete("/delete/:id", authVerify, deleteBatch);
 
 export default router;

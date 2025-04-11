@@ -2,10 +2,8 @@ import Student from "../model/studentModel.js";
 
 export const createStudent = async (req, res) => {
   const admin = req.admin._id;
-  console.log("admin", admin);
 
   const { studentName, fatherName, mobile, parentMobile, batch } = req.body;
-  console.log("req.bosy", req.body);
 
   if (!studentName || !fatherName || !mobile || !parentMobile || !batch) {
     return res.status(400).json({
@@ -37,8 +35,6 @@ export const createStudent = async (req, res) => {
       parentMobile,
       batch,
     });
-
-    console.log("newStudent", newStudent);
 
     await newStudent.save();
 
@@ -90,8 +86,9 @@ export const updateStudent = async (req, res) => {
 };
 
 export const getAllStudents = async (req, res) => {
+  const admin = req.admin._id;
   try {
-    const allStudents = await Student.find().populate("batch");
+    const allStudents = await Student.find({ admin }).populate("batch");
     if (!allStudents) {
       return res.status(400).json({
         success: false,
@@ -114,9 +111,10 @@ export const getAllStudents = async (req, res) => {
 
 export const getStudent = async (req, res) => {
   const { id } = req.params;
+  const admin = req.admin._id;
 
   try {
-    const student = await Student.findOne({ _id: id }).populate("batch");
+    const student = await Student.findOne({ _id: id, admin }).populate("batch");
 
     if (!student) {
       return res.status(400).json({
@@ -140,9 +138,10 @@ export const getStudent = async (req, res) => {
 
 export const deleteStudent = async (req, res) => {
   const { id } = req.params;
+  const admin = req.admin._id;
 
   try {
-    const student = await Student.findById(id);
+    const student = await Student.findOne({ _id: id, admin });
     if (!student) {
       return res.status(400).json({
         success: false,

@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post("/createStudent", authVerify, createStudent);
 router.put("/updateStudent/:id", authVerify, updateStudent);
-router.get("/getAllStudent", getAllStudents);
-router.get("/getStudent/:id", getStudent);
-router.delete("/delete/:id", deleteStudent);
+router.get("/getAllStudent", authVerify, getAllStudents);
+router.get("/getStudent/:id", authVerify, getStudent);
+router.delete("/delete/:id", authVerify, deleteStudent);
 
 export default router;

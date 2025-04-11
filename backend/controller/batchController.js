@@ -132,8 +132,9 @@ export const updateBatch = async (req, res) => {
 };
 
 export const getAllBatches = async (req, res) => {
+  const admin = req.admin._id;
   try {
-    const allBatches = await Batch.find();
+    const allBatches = await Batch.find({ admin });
     if (!allBatches) {
       return res.status(400).json({
         success: false,
@@ -156,9 +157,10 @@ export const getAllBatches = async (req, res) => {
 
 export const getBatch = async (req, res) => {
   const { id } = req.params;
+  const admin = req.admin._id;
 
   try {
-    const batch = await Batch.findOne({ _id: id });
+    const batch = await Batch.findOne({ _id: id, admin: admin });
 
     if (!batch) {
       return res.status(400).json({
@@ -182,9 +184,10 @@ export const getBatch = async (req, res) => {
 
 export const deleteBatch = async (req, res) => {
   const { id } = req.params;
+  const admin = req.admin._id;
 
   try {
-    const batch = await Batch.findById(id);
+    const batch = await Batch.findOne({ _id: id, admin });
     if (!batch) {
       return res.status(400).json({
         success: false,

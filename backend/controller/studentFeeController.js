@@ -72,8 +72,15 @@ export const updateStudentFee = async (req, res) => {
 };
 
 export const getAllStudentsFee = async (req, res) => {
+  const adminId = req.admin._id;
   try {
+    const admin = new mongoose.Types.ObjectId(adminId);
     const allStudentsFee = await StudentFee.aggregate([
+      {
+        $match: {
+          admin: admin,
+        },
+      },
       // Join student info
       {
         $lookup: {
@@ -104,6 +111,7 @@ export const getAllStudentsFee = async (req, res) => {
           _id: "$studentData._id",
           student: { $first: "$studentData" },
           totalAmount: { $sum: "$amount" },
+          totalBatchFee: { $first: "$batchInfo.batchFee" },
           fees: {
             $push: {
               _id: "$_id",
@@ -139,14 +147,16 @@ export const getAllStudentsFee = async (req, res) => {
 
 export const getStudentById = async (req, res) => {
   const { studentId } = req.params;
-
+  const adminId = req.admin._id;
   try {
     const studentObjectId = new mongoose.Types.ObjectId(studentId);
+    const adminObjectId = new mongoose.Types.ObjectId(adminId);
 
     const studentFee = await StudentFee.aggregate([
       {
         $match: {
           student: studentObjectId,
+          admin: adminObjectId,
         },
       },
       {
@@ -210,9 +220,10 @@ export const getStudentById = async (req, res) => {
 
 export const getStudentFee = async (req, res) => {
   const { id } = req.params;
+  const adminId = req.admin._id;
 
   try {
-    const studentFee = await StudentFee.findOne({ _id: id })
+    const studentFee = await StudentFee.findOne({ _id: id, admin: adminId })
       .populate("batch")
       .populate("student");
 
@@ -238,9 +249,10 @@ export const getStudentFee = async (req, res) => {
 
 export const deleteStudentFee = async (req, res) => {
   const { id } = req.params;
+  const adminId = req.admin._id;
 
   try {
-    const student = await StudentFee.findById(id);
+    const student = await StudentFee.findOne({ _id: id, admin: adminId });
     if (!student) {
       return res.status(400).json({
         success: false,

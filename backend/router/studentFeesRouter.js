@@ -14,10 +14,10 @@ const router = express.Router();
 
 router.post("/createStudentFee", authVerify, createStudentFee);
 router.put("/updateStudentFee/:id", authVerify, updateStudentFee);
-router.get("/getAllStudentFee", getAllStudentsFee);
-router.get("/getStudentFee/:id", getStudentFee);
-router.get("/getStudentId/:studentId", getStudentById);
+router.get("/getAllStudentFee", authVerify, getAllStudentsFee);
+router.get("/getStudentFee/:id", authVerify, getStudentFee);
+router.get("/getStudentId/:studentId", authVerify, getStudentById);
 router.get("/getStatus", getStatusOption);
-router.delete("/deleteFee/:id", deleteStudentFee);
+router.delete("/deleteFee/:id", authVerify, deleteStudentFee);
 
 export default router;
